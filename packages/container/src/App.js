@@ -4,7 +4,7 @@ import { MarketingApp } from "./components/marketingApp";
 export const App = () => {
   return (
     <div>
-      <h2>App33</h2>
+      <h2>App</h2>
       <hr />
       <MarketingApp />
     </div>
