@@ -1,11 +1,22 @@
 import React, { useRef, useLayoutEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { mount } from "marketing/MarketingApp";
 
-export const MarketingApp = () => {
+const MarketingApp = () => {
   const ref = useRef(null);
+  const history = useHistory();
 
   useLayoutEffect(() => {
-    mount(ref.current);
+    const { onParentNavigate } = mount(ref.current, {
+      onNavigate: ({ pathname: nextPathname }) => {
+        const { pathname } = history.location;
+        if (pathname !== nextPathname) {
+          history.push(nextPathname);
+        }
+      },
+      initialPath: history.location.pathname,
+    });
+    history.listen(onParentNavigate);
   }, []);
 
   return (
@@ -14,3 +25,5 @@ export const MarketingApp = () => {
     </div>
   );
 };
+
+export default MarketingApp;
